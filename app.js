@@ -142,7 +142,7 @@ function correctResultPage(){
     <div class="card">
     <h1>Out of this World!</h1>
     <p>You got it right - ${store.questions[currentQuestionNumber].correctAnswer} is correct!</p>
-    <li><img src='${spaceImg[currentQuestionNumber]}' width="160" height="120"/></li>
+    <li><img src='${spaceImg[currentQuestionNumber]}' width="300" height="260"/></li>
     <p>Your current score is ${store.score} out of ${currentQuestionNumber + 1}.</p>
     <button id="next">Next Question</button>
     </div>`;
@@ -154,7 +154,7 @@ function correctResultPage(){
   <div class="card">
   <h1>Out of this World!</h1>
   <p>You got it right - ${store.questions[currentQuestionNumber].correctAnswer} is correct!</p>
-  <li><img src=${spaceImg[currentQuestionNumber]} width="160" height="120"/></li>
+  <li><img src=${spaceImg[currentQuestionNumber]} width="300" height="260"/></li>
   <p>Go to the next page to see your final results!</p>
   <button id="final">Final Results</button>
   </div>`;
