@@ -1,8 +1,6 @@
-/**
- * Example store structure
- */
+//Setup store with array of questions and global variables to grab later
 const store = {
-  // 5 or more questions are required
+
   questions: [
     {
       question: 'How many planets are in the solar system?',
@@ -17,12 +15,12 @@ const store = {
     {
       question: 'What entity boasts a gravitational pull so powerful that even light cannot escape?',
       answers: [
-        'Black Hole',
+        'Black hole',
         'Sun',
         'Neutron Star',
         'Jupiter',
       ],
-      correctAnswer: 'Black Hole',
+      correctAnswer: 'Black hole',
     },
     {
       question: 'What is the closest star to earth after the sun?',
@@ -54,11 +52,13 @@ const store = {
       ],
       correctAnswer: 'Jupiter',
     }],
+  //variables that need to be stored outside of a function
   quizStarted: false,
   questionNumber: 0,
-  score: 0
+  score: 0,
 };
 
+//images for correct answer
 let spaceImg = [
   '/spaceQuizApp/quizImages/planets.jpg',
   '/spaceQuizApp/quizImages/blackHole.jpg',
@@ -67,26 +67,11 @@ let spaceImg = [
   '/spaceQuizApp/quizImages/jupiter.jpg'
 ]
 
-/**
- * 
- * Technical requirements:
- * 
- * Your app should include a render() function, that regenerates the view each time the store is updated. 
- * See your course material, consult your instructor, and reference the slides for more details.
- *
- * NO additional HTML elements should be added to the index.html file.
- *
- * You may add attributes (classes, ids, etc) to the existing HTML elements, or link stylesheets or additional scripts if necessary
- *
- * SEE BELOW FOR THE CATEGORIES OF THE TYPES OF FUNCTIONS YOU WILL BE CREATING 👇
- * 
- */
-
 /********** TEMPLATE GENERATION FUNCTIONS **********/
 
-// These functions return HTML templates
+// These functions return JUST HTML templates to be inserted into DOM via render functions below
 
-function startPage(){
+function startPage() {
   let startPage = `
   <header>
   <h1>Space Quiz</h1>
@@ -95,11 +80,11 @@ function startPage(){
   <h2>Welcome to the Final Frontier!</h2>
   <p>Test your knowledge about the deep abyss that is all around you...</p>
   <button id="start">Start Quiz</button>
-</div>`
+</div>`;
   return startPage;
 }
-
-function questionPage(){
+//Grab questions, score, and questionNumber from store
+function questionPage() {
   let question = store.questions[store.questionNumber];
 
   let questionPage = `
@@ -107,34 +92,37 @@ function questionPage(){
   <h1>Space Quiz</h1>
   </header>
   <div class="card">
-    <h2>Question ${store.questionNumber +1} of ${store.questions.length}</h2>
-    <h3>${question.question}</h3>
+    <h2>Question ${store.questionNumber + 1} of ${store.questions.length}</h2>
+  <fieldset>
+    <legend><h3>${question.question}</h3>
     <form>
         <div class="form">
-        <input type="radio" class="radio" name="answer" required="required" value="${question.answers[0]}">
-        <label>${question.answers[0]}</label>
+        <input type="radio" class="radio" name="answer" required="required" id= "${question.answers[0]}" value="${question.answers[0]}">
+        <label for='${question.answers[0]}'>${question.answers[0]}</label>
         <br>
-        <input type="radio" class="radio" name="answer" required="required" value="${question.answers[1]}">
-        <label>${question.answers[1]}</label>
+        <input type="radio" class="radio" name="answer" required="required" id= "${question.answers[1]}" value="${question.answers[1]}">
+        <label for='${question.answers[1]}'>${question.answers[1]}</label>
         <br>
-        <input type="radio" class="radio" name="answer" required="required" value="${question.answers[2]}">
-        <label>${question.answers[2]}</label>
+        <input type="radio" class="radio" name="answer" required="required" id= "${question.answers[2]}" value="${question.answers[2]}">
+        <label for='${question.answers[2]}'>${question.answers[2]}</label>
         <br>
-        <input type="radio" class="radio" name="answer" required="required" value="${question.answers[3]}">
-        <label>${question.answers[3]}</label>
+        <input type="radio" class="radio" name="answer" required="required" id= "${question.answers[3]}" value="${question.answers[3]}">
+        <label for='${question.answers[3]}'>${question.answers[3]}</label>
         <br>
         </div>
         <button type="submit">Submit your answer</button>
     </form>
+  </fieldset>
     <br>
     <p> Current Score: ${store.score} out of ${store.questionNumber}</p>
   </div>`;
-    return questionPage;
+  return questionPage;
 }
 
-function correctResultPage(){
-  const currentQuestionNumber = store.questionNumber - 1
-  
+
+function correctResultPage() {
+  //get current question number
+  const currentQuestionNumber = store.questionNumber - 1;
   let correctResultPage = `
   <header>
   <h1>Space Quiz</h1>
@@ -146,7 +134,11 @@ function correctResultPage(){
     <p>Your current score is ${store.score} out of ${currentQuestionNumber + 1}.</p>
     <button id="next">Next Question</button>
     </div>`;
+  return correctResultPage;
+}
 
+function correctResultFinalPreviewPage() {
+  const currentQuestionNumber = store.questionNumber - 1;
   let correctResultFinalPreviewPage = `
   <header>
   <h1>Space Quiz</h1>
@@ -154,24 +146,15 @@ function correctResultPage(){
   <div class="card">
   <h1>Out of this World!</h1>
   <p>You got it right - ${store.questions[currentQuestionNumber].correctAnswer} is correct!</p>
-  <li><img src=${spaceImg[currentQuestionNumber]} width="300" height="260"/></li>
+  <li><img src='${spaceImg[currentQuestionNumber]}' width="300" height="260"/></li>
   <p>Go to the next page to see your final results!</p>
   <button id="final">Final Results</button>
   </div>`;
-
-  if (store.questionNumber !== store.questions.length){
-    return correctResultPage;
-  }
-
-  else if (store.questionNumber === store.questions.length){
-    return correctResultFinalPreviewPage;
-  }
-  //maybe change in this part - if question number equals total question, go to final result page 
+  return correctResultFinalPreviewPage;
 }
 
-function incorrectResultPage(){
-  const currentQuestionNumber = store.questionNumber - 1
-  
+function incorrectResultPage() {
+  const currentQuestionNumber = store.questionNumber - 1;
   let incorrectResultPage = `
   <header>
   <h1>Space Quiz</h1>
@@ -182,8 +165,12 @@ function incorrectResultPage(){
     <p>Your current score is ${store.score} out of ${currentQuestionNumber + 1}.</p>
     <button id="next">Next Question</button>
     </div>`;
+  return incorrectResultPage;
+}
 
 
+function incorrectResultFinalPreviewPage() {
+  const currentQuestionNumber = store.questionNumber - 1;
   let incorrectResultFinalPreviewPage = `
   <header>
   <h1>Space Quiz</h1>
@@ -194,21 +181,12 @@ function incorrectResultPage(){
   <p>Go to the next page to see your final results!</p>
   <button id="final">Final Results</button>
   </div>`;
-  
-  if (store.questionNumber !== store.questions.length){
-    return incorrectResultPage;
-  }
+  return incorrectResultFinalPreviewPage;
+}
 
-  else if (store.questionNumber === store.questions.length){
-    return incorrectResultFinalPreviewPage;
-  }
-    //maybe change in this part - if question number equals total question, go to final result page 
-    //if question number is not total question, return incorrectPage; if true, finalResult
-  }
-
-  function finalResultsPage(){
-    let finalResultsPage =
-  `<header>
+function finalResultsPage() {
+  let finalResultsPage =
+    `<header>
   <h1>Space Quiz</h1>
   </header>
     <div class="card">
@@ -216,91 +194,135 @@ function incorrectResultPage(){
       <p>Your total score is ${store.score} out of a possible ${store.questionNumber}.</p>
       <button id="restart">Restart Quiz</button>
       </div>`;
-      return finalResultsPage
-  }
+  return finalResultsPage;
+}
 
 /********** RENDER FUNCTION(S) **********/
 
-// This function conditionally replaces the contents of the <main> tag based on the state of the store
+// These functions conditionally replace the contents of the <main> tag based on the state of the store
+//every "page" given specific rendering function
 
-function render(){
-  if(store.quizStarted === false){
-    $('main').html(startPage());
-  }
-  else if (store.quizStarted){
-    $('main').html(questionPage());
-  }
+function render() {
+  $('main').html(startPage());
 }
 
-function checkAnswer(){
-  const selectedAnswer = $('input[name="answer"]:checked').val();
-  if (selectedAnswer === store.questions[store.questionNumber].correctAnswer) {
-    store.questionNumber++;
-    store.score++;
-    $('main').html(correctResultPage())
-  }
-  else if (selectedAnswer !== store.questions[store.questionNumber].correctAnswer) {
-    store.questionNumber++;
-    $('main').html(incorrectResultPage())
-  }
-  
+function renderStart() {
+  $('main').html(questionPage());
+}
 
-  
-// save for button on correctResult and incorrectResult  store.questionNumber++;
-  // if right, go to correctResults
-  //if wrong, incorrectResults
+function renderIncorrectResultPreviewPage() {
+  $('main').html(incorrectResultFinalPreviewPage());
+}
+
+function renderIncorrectResultPage() {
+  $('main').html(incorrectResultPage());
+}
+
+function renderCorrectResultPreviewPage() {
+  $('main').html(correctResultFinalPreviewPage());
+}
+
+function renderCorrectResultPage() {
+  $('main').html(correctResultPage());
+}
+
+function renderFinalResults() {
+  $('main').html(finalResultsPage());
 }
 /********** EVENT HANDLER FUNCTIONS **********/
 
 // These functions handle events (submit, click, etc)
-
-function handleStartQuiz(){
-  $('main').on('click','#start',function(evt){
-        evt.preventDefault();
-        store.questionNumber = 0;
-        store.score = 0;
-        store.quizStarted=true;
-        render();
-
-  })
-
-}
-
-function handleAnswerSubmit(){
-  $('main').on('submit', 'form', function(evt){
+//tells DOM what to do next when specified events happen
+//manipulates the store
+function handleStartQuiz() {
+  $('main').on('click', '#start', function (evt) {
     evt.preventDefault();
+    store.questionNumber = 0;
+    store.score = 0;
+    store.quizStarted = true;
+    renderStart();
+  });
+}
+
+function handleAnswerSubmit() {
+  $('main').on('submit', 'form', function (evt) {
+    evt.preventDefault();
+    store.questionNumber++;
     checkAnswer();
-  })
+  });
 }
 
-function handleNextQuestion(){
-  $('main').on('click', '#next', function(){
-    console.log("clicked Next Question")
+function handleNextQuestion() {
+  $('main').on('click', '#next', function () {
+    quizStart();
+  });
+}
+
+function handleFinalResults() {
+  $('main').on('click', '#final', function () {
+    renderFinalResults();
+  });
+}
+
+function handleRestartQuiz() {
+  $('main').on('click', '#restart', function () {
+    store.quizStarted = false;
     render();
-  })
+  });
 }
 
-function finalResultsClick(){
-  $('main').on('click', '#final', function(){
-    console.log("clicked Final Results")
-    $('main').html(finalResultsPage());
-  })
+function handleCorrectAnswer(){
+  store.score++;
+  whichCorrectResultPage();
 }
 
-function handleRestartQuiz(){
-  $('main').on('click', '#restart', function(){
-    store.quizStarted=false;
+//*************Flow Logic Functions*********
+//functions that controls what pages get rendered 
+function quizStart() {
+  if (store.quizStarted === false) {
     render();
-  })
+  }
+  else if (store.quizStarted) {
+    renderStart();
+  }
 }
 
-function main(){
-  render();
+function checkAnswer() {
+  const selectedAnswer = $('input[name="answer"]:checked').val();
+  if (selectedAnswer === store.questions[store.questionNumber -1].correctAnswer) {
+    handleCorrectAnswer();
+  }
+  else if (selectedAnswer !== store.questions[store.questionNumber -1].correctAnswer) {
+    whichIncorrectResultPage();
+  }
+}
+
+function whichCorrectResultPage() {
+  if (store.questionNumber !== store.questions.length) {
+    renderCorrectResultPage();
+  }
+  else if (store.questionNumber === store.questions.length) {
+    renderCorrectResultPreviewPage();
+  }
+}
+
+function whichIncorrectResultPage() {
+  if (store.questionNumber !== store.questions.length) {
+    renderIncorrectResultPage();
+  }
+
+  else if (store.questionNumber === store.questions.length) {
+    renderIncorrectResultPreviewPage();
+  }
+}
+//functions that let the user "control" the app that are loaded at the beginning
+function main() {
+  quizStart();
   handleStartQuiz();
   handleAnswerSubmit();
   handleNextQuestion();
-  finalResultsClick()
   handleRestartQuiz();
+  handleFinalResults();
 }
 
 
