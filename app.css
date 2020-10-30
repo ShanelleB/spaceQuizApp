@@ -9,11 +9,13 @@
 
 body {
   /* background-color: #1d3557; */
-  background-image: url("/spaceQuizApp/quizImages/Space.jpeg");
+  background-color: #301934;
+  background-image: url('/spaceQuizApp/quizImages/space.jpeg');
   background-repeat: repeat, no-repeat;
     background-size: auto, 100% 100%;
     background-attachment: fixed;
     overflow-y: scroll;
+
 }
 
 header {
@@ -54,6 +56,10 @@ button {
   text-align: center;
 }
 
+fieldset{
+
+  border: 0;
+}
 /* desktop */
 @media all and (min-width: 600px) {
 
@@ -69,4 +75,4 @@ header {
 
 
 
-}
+} 
